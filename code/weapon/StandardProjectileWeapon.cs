@@ -10,6 +10,12 @@ public partial class StandardProjectileWeapon : Weapon
 	public override string ModelPath => myData == null ? null : myData.ViewModel;
 	public override string ViewModelPath => myData == null ? null : myData.ViewModel;
 
+	public int MaxUses => myData == null ? -1 : myData.Uses;
+
+	public int TimesUsed = 0;
+
+	public int Uses => MaxUses - TimesUsed;
+
 	public override float PrimaryRate => myData == null ? 1f : myData.Delay;
 
 	public StandardProjectileWeapon LoadWeapon(WeaponData data)
@@ -35,6 +41,16 @@ public partial class StandardProjectileWeapon : Weapon
 		//ShootEffects();
 		Pawn.PlaySound( "sounds/snowball_fire.sound" );
 		ShootBullet( 0.1f, 100, 20, 1 );
+		if ( !Game.IsServer ) return;
+		if (MaxUses != -1)
+		{
+			TimesUsed++;
+			if (Uses == 0)
+			{
+				Pawn.EquiptStandardWeapon();
+				Delete();
+			}
+		}
 	}
 
 	public override void ShootBullet( Vector3 pos, Vector3 dir, float spread, float force, float damage, float bulletSize )

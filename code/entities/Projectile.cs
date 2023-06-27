@@ -15,6 +15,8 @@ public partial class Projectile : ModelEntity
 	[Net]
 	public ProjectileData myData { get; set; }
 
+	public float TimeOfCreation;
+
 	public Pawn Pawn => Owner as Pawn;
 
 	public Trace trace;
@@ -28,6 +30,7 @@ public partial class Projectile : ModelEntity
 		}
 		trace = trace.Radius(radius);
 		EnableHitboxes = true;
+		TimeOfCreation = Time.Now;
 	}
 
 	public Projectile Load(ProjectileData data)
@@ -39,13 +42,17 @@ public partial class Projectile : ModelEntity
 
 	public virtual void OnHit(Pawn p)
 	{
-		p.Velocity += Velocity * knockScale;
-		Sound.FromWorld( myData.HitSound, Position );
+		p.Pummel(Velocity * knockScale);
 	}
 
 	[GameEvent.Tick.Server]
 	public void OnServerTick()
 	{
+		if ((TimeOfCreation + 10f) < Time.Now )
+		{
+			Delete();
+			return;
+		}
 		Vector3 spd = Rotation.Forward * speed;
 		Velocity = spd;
 		TraceResult tr = trace.FromTo( Position, Position + spd )
@@ -58,10 +65,31 @@ public partial class Projectile : ModelEntity
 
 		if ( tr.Entity is Pawn )
 		{
+			Sound.FromWorld( myData.HitSound, Position );
 			OnHit( tr.Entity as Pawn );
 		}
 		if (tr.Hit)
 		{
+			if (myData.Effect == HitEffect.Explode)
+			{
+				TraceResult[] results = trace.FromTo( Position, Position + spd )
+					.Radius(myData.ExplosionRadius)
+					.UseHitboxes()
+					.WithAnyTags( "solid", "player", "npc" )
+					.Ignore( tr.Entity ) //ignore the thing we directly hit
+					.RunAll();
+				if ( results != null )
+				{
+					foreach ( TraceResult t in results )
+					{
+						if ( t.Entity is Pawn )
+						{
+							Pawn p = t.Entity as Pawn;
+							p.SetPummel( (-(tr.HitPosition - p.Position).Normal) * (knockScale * myData.IndirectMultiplier) );
+						}
+					}
+				}
+			}
 			Delete();
 		}
 		Position += Velocity;

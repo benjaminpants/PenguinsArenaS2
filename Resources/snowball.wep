@@ -5,5 +5,5 @@
   "PickupModel": "models/weapons/snowball.vmdl",
   "Projectile": "resources/snowball.proj",
   "Delay": 1.5,
-  "Uses": 0
+  "Uses": -1
 }

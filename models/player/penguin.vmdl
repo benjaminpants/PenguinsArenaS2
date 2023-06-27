@@ -21,6 +21,50 @@
 						use_global_default = false
 						global_default_material = ""
 					},
+					{
+						_class = "MaterialGroup"
+						name = "Red"
+						remaps = 
+						[
+							{
+								from = "models/player/penguin.vmat"
+								to = "models/player/penguin_red.vmat"
+							},
+						]
+					},
+					{
+						_class = "MaterialGroup"
+						name = "Green"
+						remaps = 
+						[
+							{
+								from = "models/player/penguin.vmat"
+								to = "models/player/penguin_green.vmat"
+							},
+						]
+					},
+					{
+						_class = "MaterialGroup"
+						name = "Yellow"
+						remaps = 
+						[
+							{
+								from = "models/player/penguin.vmat"
+								to = "models/player/penguin_yellow.vmat"
+							},
+						]
+					},
+					{
+						_class = "MaterialGroup"
+						name = "Invincible"
+						remaps = 
+						[
+							{
+								from = "models/player/penguin.vmat"
+								to = "models/player/penguin_invincible.vmat"
+							},
+						]
+					},
 				]
 			},
 			{

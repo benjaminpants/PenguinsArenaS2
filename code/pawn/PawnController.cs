@@ -22,7 +22,7 @@ public class PawnController : EntityComponent<Pawn>
 
 	public bool jumpedThisFrame = false;
 
-	public const float torqueToSource = 0.21f;
+	public const float torqueToSource = 0.2f;
 
 	HashSet<string> ControllerEvents = new( StringComparer.OrdinalIgnoreCase );
 
@@ -79,6 +79,8 @@ public class PawnController : EntityComponent<Pawn>
 		{
 			jumpedThisFrame = false;
 		}
+
+		mh.TryUnstuck();
 	}
 
 	public void Simulate( IClient cl )

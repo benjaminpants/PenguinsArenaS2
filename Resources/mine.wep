@@ -1,0 +1,9 @@
+{
+  "Name": "Mine",
+  "ViewModel": "models/weapons/mine.vmdl",
+  "ViewPosition": "30,-13,-16",
+  "PickupModel": "models/weapons/mine.vmdl",
+  "Projectile": "resources/mine.proj",
+  "Delay": 1.5,
+  "Uses": 1
+}

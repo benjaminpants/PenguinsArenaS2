@@ -53,7 +53,7 @@ public partial class Weapon : AnimatedEntity
 	{
 		Owner = pawn;
 		SetParent( pawn, true );
-		EnableDrawing = true;
+		EnableDrawing = false;
 		CreateViewModel( To.Single( pawn ) );
 	}
 

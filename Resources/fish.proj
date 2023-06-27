@@ -1,0 +1,12 @@
+{
+  "Name": "Fish",
+  "Model": "models/weapons/fish.vmdl",
+  "HitSound": "sounds/slap_hit.sound",
+  "Radius": 4,
+  "Speed": 33,
+  "Trajectory": "Straight",
+  "Effect": "Shove",
+  "ExplosionRadius": 0,
+  "Knockback": 22,
+  "IndirectMultiplier": 0
+}

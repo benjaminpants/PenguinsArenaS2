@@ -43,8 +43,14 @@ public partial class ProjectileData : GameResource
 	[Description( "The effect applied on hit." )]
 	public HitEffect Effect { get; set; }
 	[Category( "Effect" )]
+	[Description( "If Effect is Explode, this is the radius that will be used for the explosion." )]
+	public float ExplosionRadius { get; set; }
+	[Category( "Effect" )]
 	[Description( "The knockback applied to the target upon contact or explosion" )]
 	public float Knockback { get; set; }
+	[Category( "Effect" )]
+	[Description( "The multiplier applied to indirect knockback(such as an explosion) by this projectile" )]
+	public float IndirectMultiplier { get; set; }
 
 }
 
@@ -71,6 +77,17 @@ public partial class WeaponData : GameResource
 	public float Delay { get; set; }
 
 	[Description( "How many shots this weapon can fire before its destroyed. -1 is infinite." )]
-	public float Uses { get; set; }
+	public int Uses { get; set; }
 
+}
+
+[GameResource( "Penguin Model", "pgnm", "Describes a penguin's model", Icon = "group" )]
+public partial class PenguinModel : GameResource
+{
+	[ResourceType( "vmdl" )]
+	public string Model { get; set; }
+
+	public string Skin { get; set; }
+
+	public string InvincibleSkin { get; set; }
 }

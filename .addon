@@ -19,7 +19,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Unrestricted",
     "MapList": [
-      "gvar.metro"
+      "facepunch.flatgrass"
     ],
     "RankType": "None",
     "PerMapRanking": false,
