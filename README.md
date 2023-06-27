@@ -1,7 +1,7 @@
 # Penguins Arena: Source 2
 An attempt at porting [Penguins Arena Sedna's World](https://frogames.itch.io/penguins-arena) to Source 2/S&box.
 
-# Why the fuck are you doing this????
+## Why the fuck are you doing this????
 :)
 
 ## Features (all currently wip)
