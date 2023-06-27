@@ -1,0 +1,9 @@
+{
+  "Name": "Snowball",
+  "ViewModel": "models/weapons/snowball.vmdl",
+  "ViewPosition": "25,-13,-10",
+  "PickupModel": "models/weapons/snowball.vmdl",
+  "Projectile": "resources/snowball.proj",
+  "Delay": 1.5,
+  "Uses": 0
+}

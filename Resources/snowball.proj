@@ -1,0 +1,10 @@
+{
+  "Name": "Snowball",
+  "Model": "models/weapons/snowball.vmdl",
+  "HitSound": "sounds/soft_hit.sound",
+  "Radius": 4,
+  "Speed": 20,
+  "Trajectory": "Straight",
+  "Effect": "Shove",
+  "Knockback": 30
+}
