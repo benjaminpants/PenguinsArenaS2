@@ -1,0 +1,10 @@
+{
+  "Name": "Mine",
+  "Model": "models/weapons/snowball.vmdl",
+  "HitSound": "sounds/soft_hit.sound",
+  "Radius": 4,
+  "Speed": 30,
+  "Trajectory": "Straight",
+  "Effect": "Explode",
+  "Knockback": 50
+}
