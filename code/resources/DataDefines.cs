@@ -91,3 +91,13 @@ public partial class PenguinModel : GameResource
 
 	public string InvincibleSkin { get; set; }
 }
+
+[GameResource( "Team", "team", "Describes a team", Icon = "flag" )]
+public partial class Team : GameResource
+{
+	public string Name { get; set; }
+
+	[ResourceType( "pgnm" )]
+	public string Model { get; set; }
+
+}
