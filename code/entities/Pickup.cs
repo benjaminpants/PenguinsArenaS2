@@ -10,13 +10,19 @@ public class Pickup : ModelEntity
 	[Property( Title = "Weapon Data" )]
 	public WeaponData weaponData { get; set; }
 
+	[Property( Title = "Respawn Time" )]
+	public float respawnTime { get; set; }
+
+	public bool OnCooldown = false;
+	public float RespawnAtTime = -1f;
+
 	public override void Spawn()
 	{
 		base.Spawn();
 		SetModel( weaponData.PickupModel );
 		EnableDrawing = true;
-		//SetupPhysicsFromAABB( PhysicsMotionType.Keyframed, new Vector3(-6f,-6f,-6f), new Vector3( 6f, 6f, 6f ) );
-		SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
+		SetupPhysicsFromSphere(PhysicsMotionType.Keyframed, Vector3.Up * 5f,5f);
+		//SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 		EnableTouch = true;
 		Tags.Clear();
 		UsePhysicsCollision = true;
@@ -24,14 +30,39 @@ public class Pickup : ModelEntity
 		Tags.Add("trigger");
 	}
 
+	[GameEvent.Tick.Server]
+	public void OnServerTick()
+	{
+		if ( OnCooldown && (RespawnAtTime != -1) )
+		{
+			if ( Time.Now >= RespawnAtTime )
+			{
+				EnableDrawing = true;
+				OnCooldown = false;
+				RespawnAtTime = -1f;
+			}
+		}
+	}
+
+	public void EnterCooldown()
+	{
+		if ( OnCooldown ) return;
+		RespawnAtTime = Time.Now + respawnTime;
+		OnCooldown = true;
+		EnableDrawing = false;
+	}
+
 	public virtual void OnPickup(Pawn p)
 	{
-		p.SetActiveWeapon(new StandardProjectileWeapon().LoadWeapon(weaponData) );
+		if ( !Game.IsServer ) return;
+		if ( OnCooldown ) return;
+		EnterCooldown();
+		var w = new StandardProjectileWeapon().LoadWeapon( weaponData );
+		p.ForceWeapon(w);
 	}
 
 	public override void Touch( Entity other )
 	{
-		Log.Info(other);
 		if ( other is Pawn )
 		{
 			OnPickup( other as Pawn );

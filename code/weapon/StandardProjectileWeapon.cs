@@ -76,6 +76,13 @@ public partial class StandardProjectileWeapon : Weapon
 
 	protected override void Animate()
 	{
-		Pawn.SetAnimParameter( "holdtype", (int)CitizenAnimationHelper.HoldTypes.Pistol );
+		//Pawn.SetAnimParameter( "holdtype", (int)CitizenAnimationHelper.HoldTypes.Pistol );
+		if (Game.IsClient)
+		{
+			if ( ViewModelEntity == null )
+			{
+				CreateViewModel();
+			}
+		}
 	}
 }

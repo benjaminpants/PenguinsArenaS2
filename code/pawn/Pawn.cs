@@ -100,6 +100,14 @@ public partial class Pawn : AnimatedEntity
 		ActiveWeapon.OnEquip( this );
 	}
 
+	public void ForceWeapon( Weapon weapon )
+	{
+		ActiveWeapon?.OnHolster();
+		ActiveWeapon?.Delete();
+		ActiveWeapon = weapon;
+		ActiveWeapon.OnEquip( this );
+	}
+
 	public void Respawn()
 	{
 		Components.RemoveAny<PawnController>();
@@ -108,7 +116,7 @@ public partial class Pawn : AnimatedEntity
 
 		var w = new StandardProjectileWeapon().LoadWeapon( ResourceLibrary.Get<WeaponData>( "resources/grenade.wep" ) );
 
-		SetActiveWeapon( w );
+		ForceWeapon( w );
 
 		SetMaterialGroup("Teamless");
 	}
@@ -119,7 +127,7 @@ public partial class Pawn : AnimatedEntity
 
 		w.TimeSincePrimaryAttack = 0;
 
-		SetActiveWeapon( w );
+		ForceWeapon( w );
 	}
 
 	public void DressFromClient( IClient cl )
