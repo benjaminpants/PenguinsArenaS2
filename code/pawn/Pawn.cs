@@ -106,14 +106,18 @@ public partial class Pawn : AnimatedEntity
 		Components.Create<PawnController>();
 		//Components.Create<PawnAnimator>();
 
-		var w = new StandardProjectileWeapon().LoadWeapon( ResourceLibrary.Get<WeaponData>( "resources/fish.wep" ) );
+		var w = new StandardProjectileWeapon().LoadWeapon( ResourceLibrary.Get<WeaponData>( "resources/grenade.wep" ) );
 
 		SetActiveWeapon( w );
+
+		SetMaterialGroup("Teamless");
 	}
 
 	public void EquiptStandardWeapon()
 	{
 		var w = new StandardProjectileWeapon().LoadWeapon( ResourceLibrary.Get<WeaponData>( "resources/snowball.wep" ) );
+
+		w.TimeSincePrimaryAttack = 0;
 
 		SetActiveWeapon( w );
 	}
@@ -139,7 +143,7 @@ public partial class Pawn : AnimatedEntity
 		float perl = Noise.Perlin( (Time.Now + this.NetworkIdent) * 10f);
 		perl -= 0.5f;
 		//Log.Info(perl);
-		BuildInputIsolated(Vector3.Zero, new Angles( 0, (perl * 3000f) * Time.Delta, 0 ), false);
+		BuildInputIsolated(Vector3.Forward, new Angles( 0, (perl * 3000f) * Time.Delta, 0 ), false);
 		if ( Random.Shared.NextDouble() >= 0.9 )
 		{
 			ActiveWeapon?.AttemptFire();

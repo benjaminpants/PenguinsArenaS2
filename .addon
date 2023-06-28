@@ -19,7 +19,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Unrestricted",
     "MapList": [
-      "facepunch.flatgrass"
+      "pgn_debug"
     ],
     "RankType": "None",
     "PerMapRanking": false,

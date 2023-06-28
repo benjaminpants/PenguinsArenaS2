@@ -14,8 +14,8 @@
 						remaps = 
 						[
 							{
-								from = "filet.vmat"
-								to = "models/weapons/fish.vmat"
+								from = "grenade.vmat"
+								to = "models/weapons/fishnade.vmat"
 							},
 						]
 						use_global_default = false
@@ -29,10 +29,10 @@
 				[
 					{
 						_class = "RenderMeshFile"
-						filename = "sources/models/fish_basket.fbx"
+						filename = "sources/models/fishnade.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 0.25
+						import_scale = 0.3
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
@@ -45,20 +45,6 @@
 								"Mesh_001",
 							]
 						}
-					},
-				]
-			},
-			{
-				_class = "PhysicsShapeList"
-				children = 
-				[
-					{
-						_class = "PhysicsHullFromRender"
-						parent_bone = ""
-						surface_prop = "default"
-						collision_tags = "solid"
-						faceMergeAngle = 20.0
-						maxHullVertices = 32
 					},
 				]
 			},

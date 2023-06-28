@@ -40,9 +40,46 @@ public partial class Projectile : ModelEntity
 		return this;
 	}
 
-	public virtual void OnHit(Pawn p)
+	public virtual void SetRotation(Rotation r)
+	{
+		Rotation = r;
+	}
+
+	public virtual bool OnHit(Pawn p)
 	{
 		p.Pummel(Velocity * knockScale);
+		Sound.FromWorld( myData.HitSound, Position );
+		return true;
+	}
+
+	public virtual Vector3 CalculateVelocity()
+	{
+		return Rotation.Forward * speed;
+	}
+
+	public virtual bool OnHit(TraceResult tr, Vector3 spd)
+	{
+		if ( myData.Effect == HitEffect.Explode )
+		{
+			TraceResult[] results = trace.FromTo( Position, Position + spd )
+				.Radius( myData.ExplosionRadius )
+				.UseHitboxes()
+				.WithAnyTags( "solid", "player", "npc" )
+				.Ignore( tr.Entity ) //ignore the thing we directly hit
+				.RunAll();
+			if ( results != null )
+			{
+				foreach ( TraceResult t in results )
+				{
+					if ( t.Entity is Pawn )
+					{
+						Pawn p = t.Entity as Pawn;
+						p.SetPummel( (-(tr.HitPosition - p.Position).Normal) * (knockScale * myData.IndirectMultiplier) );
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	[GameEvent.Tick.Server]
@@ -53,7 +90,7 @@ public partial class Projectile : ModelEntity
 			Delete();
 			return;
 		}
-		Vector3 spd = Rotation.Forward * speed;
+		Vector3 spd = CalculateVelocity();
 		Velocity = spd;
 		TraceResult tr = trace.FromTo( Position, Position + spd )
 			.UseHitboxes()
@@ -65,32 +102,17 @@ public partial class Projectile : ModelEntity
 
 		if ( tr.Entity is Pawn )
 		{
-			Sound.FromWorld( myData.HitSound, Position );
-			OnHit( tr.Entity as Pawn );
+			if ( OnHit( tr.Entity as Pawn ) )
+			{
+				Delete();
+			}
 		}
 		if (tr.Hit)
 		{
-			if (myData.Effect == HitEffect.Explode)
+			if (OnHit(tr,spd))
 			{
-				TraceResult[] results = trace.FromTo( Position, Position + spd )
-					.Radius(myData.ExplosionRadius)
-					.UseHitboxes()
-					.WithAnyTags( "solid", "player", "npc" )
-					.Ignore( tr.Entity ) //ignore the thing we directly hit
-					.RunAll();
-				if ( results != null )
-				{
-					foreach ( TraceResult t in results )
-					{
-						if ( t.Entity is Pawn )
-						{
-							Pawn p = t.Entity as Pawn;
-							p.SetPummel( (-(tr.HitPosition - p.Position).Normal) * (knockScale * myData.IndirectMultiplier) );
-						}
-					}
-				}
+				Delete();
 			}
-			Delete();
 		}
 		Position += Velocity;
 	}

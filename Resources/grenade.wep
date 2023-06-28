@@ -1,0 +1,9 @@
+{
+  "Name": "Grenade",
+  "ViewModel": "models/weapons/fishnade.vmdl",
+  "ViewPosition": "26,-14,-22",
+  "PickupModel": "models/weapons/fishnade.vmdl",
+  "Projectile": "resources/grenade.proj",
+  "Delay": 1,
+  "Uses": 1
+}

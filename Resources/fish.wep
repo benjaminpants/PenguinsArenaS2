@@ -2,7 +2,7 @@
   "Name": "Fish",
   "ViewModel": "models/weapons/fish.vmdl",
   "ViewPosition": "23,-8,-9.8",
-  "PickupModel": "models/weapons/fish.vmdl",
+  "PickupModel": "models/weapons/fish_basket.vmdl",
   "Projectile": "resources/fish.proj",
   "Delay": 5,
   "Uses": 20

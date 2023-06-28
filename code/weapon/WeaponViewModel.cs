@@ -20,6 +20,7 @@ public partial class WeaponViewModel : BaseViewModel
 		if (Weapon is StandardProjectileWeapon)
 		{
 			StandardProjectileWeapon spw = Weapon as StandardProjectileWeapon;
+			EnableDrawing = spw.CanPrimaryAttack();
 			Position += spw.myData.ViewPosition.RotateAround(Vector3.Zero,Rotation);
 		}
 

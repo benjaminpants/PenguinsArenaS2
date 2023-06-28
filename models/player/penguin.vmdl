@@ -65,6 +65,17 @@
 							},
 						]
 					},
+					{
+						_class = "MaterialGroup"
+						name = "Teamless"
+						remaps = 
+						[
+							{
+								from = "models/player/penguin.vmat"
+								to = "models/player/penguin_black.vmat"
+							},
+						]
+					},
 				]
 			},
 			{

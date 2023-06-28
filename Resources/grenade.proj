@@ -1,0 +1,12 @@
+{
+  "Name": "Fish",
+  "Model": "models/weapons/fishnade.vmdl",
+  "HitSound": "sounds/slap_hit.sound",
+  "Radius": 6,
+  "Speed": 10,
+  "Trajectory": "Grenade",
+  "Effect": "Explode",
+  "ExplosionRadius": 142,
+  "Knockback": 89,
+  "IndirectMultiplier": 5
+}

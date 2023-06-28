@@ -67,12 +67,16 @@ public class PawnController : EntityComponent<Pawn>
 
 		if ( mh.TryMoveWithStep( Time.Delta, StepSize ) > 0 )
 		{
-			if ( Grounded )
+			/*if ( Grounded )
 			{
 				mh.Position = StayOnGround( mh.Position );
+			}*/
+			TraceResult r = mh.TraceFromTo( mh.Position, mh.Position );
+			if ( !r.StartedSolid )
+			{
+				Entity.Position = mh.Position;
+				Entity.Velocity = mh.Velocity;
 			}
-			Entity.Position = mh.Position;
-			Entity.Velocity = mh.Velocity;
 		}
 
 		if ( Entity.GroundEntity == null )
@@ -80,7 +84,6 @@ public class PawnController : EntityComponent<Pawn>
 			jumpedThisFrame = false;
 		}
 
-		mh.TryUnstuck();
 	}
 
 	public void Simulate( IClient cl )

@@ -56,12 +56,22 @@ public partial class StandardProjectileWeapon : Weapon
 	public override void ShootBullet( Vector3 pos, Vector3 dir, float spread, float force, float damage, float bulletSize )
 	{
 		if ( !Game.IsServer ) return;
-		Projectile sb = new Projectile();
-		sb.Load(ResourceLibrary.Get<ProjectileData>(myData.Projectile));
+		ProjectileData myProj = ResourceLibrary.Get<ProjectileData>( myData.Projectile );
+		Projectile sb;
+		switch (myProj.Trajectory)
+		{
+			case ProjectileTrajectory.Grenade:
+				sb = new Grenade();
+				break;
+			default:
+				sb = new Projectile();
+				break;
+		}
+		sb.Load( myProj );
 		sb.Owner = Owner;
 		sb.Position = pos;
 		sb.Position += Vector3.Down * 5f;
-		sb.Rotation = Rotation.LookAt(dir,sb.Rotation.Up);
+		sb.SetRotation(Rotation.LookAt(dir,sb.Rotation.Up));
 	}
 
 	protected override void Animate()
