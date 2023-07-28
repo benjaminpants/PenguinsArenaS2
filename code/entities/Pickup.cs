@@ -22,7 +22,6 @@ public class Pickup : ModelEntity
 		SetModel( weaponData.PickupModel );
 		EnableDrawing = true;
 		SetupPhysicsFromSphere(PhysicsMotionType.Keyframed, Vector3.Up * 5f,5f);
-		//SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
 		EnableTouch = true;
 		Tags.Clear();
 		UsePhysicsCollision = true;
@@ -42,6 +41,7 @@ public class Pickup : ModelEntity
 				RespawnAtTime = -1f;
 			}
 		}
+		Rotation = new Angles(new Vector3(0f, Time.Now * 150f, 0f)).ToRotation();
 	}
 
 	public void EnterCooldown()

@@ -28,10 +28,17 @@ public partial class Weapon : AnimatedEntity
 	/// </summary>
 	public virtual float PrimaryRate => 5.0f;
 
+	public virtual float SecondaryRate => 1.0f;
+
 	/// <summary>
 	/// How long since we last shot this gun.
 	/// </summary>
 	[Net, Predicted] public TimeSince TimeSincePrimaryAttack { get; set; }
+
+	/// <summary>
+	/// How long since we last shot our secondary.
+	/// </summary>
+	[Net, Predicted] public TimeSince TimeSinceSecondaryAttack { get; set; }
 
 	public override void Spawn()
 	{
@@ -78,6 +85,16 @@ public partial class Weapon : AnimatedEntity
 		{
 			AttemptFire();
 		}
+
+		if ( Input.Down( "attack2" ) ) //every weapon has a slap
+		{
+			AttemptSecondary();
+		}
+	}
+
+	public virtual void AttemptSecondary()
+	{
+
 	}
 
 	public virtual void AttemptFire()
@@ -104,6 +121,20 @@ public partial class Weapon : AnimatedEntity
 		if ( rate <= 0 ) return true;
 
 		return TimeSincePrimaryAttack > (1 / rate);
+	}
+
+	/// <summary>
+	/// Called every <see cref="Simulate(IClient)"/> to see if we can shoot our secondary.
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool CanSecondaryAttack()
+	{
+		if ( !Owner.IsValid() ) return false;
+
+		var rate = SecondaryRate;
+		if ( rate <= 0 ) return true;
+
+		return TimeSinceSecondaryAttack > (1 / rate);
 	}
 
 	/// <summary>
